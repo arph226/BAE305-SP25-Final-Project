@@ -54,16 +54,16 @@ Date: 4/16/2024
 
 ## Project Code
 # Testing Description
-pH Sensor Reading Accuracy
-RGB LED Accuracy
-LCD Display
-Motor Control
-Serial Command Inputs and Recommendations
+## pH Sensor Reading Accuracy
+## RGB LED Accuracy
+## LCD Display
+## Motor Control
+## Serial Command Inputs and Recommendations
 
 # Design Decision Discussion
 ***Include information on why we made the decisions we did for users
 
 # Test Results Discussion
-
+talk about swinging of pH tester
 
 # Testing Results
