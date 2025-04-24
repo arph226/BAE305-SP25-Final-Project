@@ -65,5 +65,6 @@ Date: 4/16/2024
 
 # Test Results Discussion
 talk about swinging of pH tester
+As the testing process began, the team attempted to attach the pH sensor to a string which was attached to the main structure. While the string was capable of holding the weight of the pH sensor, as the sensor was raised and lowered there was swinging of the sensor. This 
 
 # Testing Results
