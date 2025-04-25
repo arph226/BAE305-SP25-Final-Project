@@ -219,17 +219,17 @@ void raiseSensor3Inches() {
 
 # Testing Description
 ### pH Sensor Reading Accuracy
-
+The pH sensor was able to read accurately. When purchased, it was advertised to measure pH values 0-14 and had an error of +- .2 pH. When testing the pH sensor, the sensor was dipped into three different known values of pH. These values were 4, 7, and 10. In the trial runs with each calibration constant, the pH was able to record values within the range of error everytime. 
 ### RGB LED Accuracy
-
+The RGB LED accuracy is sufficient. When the pH reads that it is too low, underneath a pH of 6.5, a red light would turn on. When the pH is too high, above a pH of 7.5, a blue light would turn on. Lastly, whenever the pH was optimal whih is between a level of 6 and 8, a green light would appear. This was tested over 20 times and was successful everytime. 
 ### LCD Display
-
+The LCD Display is great as it tells the user what the sensor is reading in a string versus a numerical value. When the pH is too basic the LCD displays: "pH: Too Basic." When the pH is too acidic it displays: "pH: Too Acidic." Lastly, when the pH is in the optimal range the LCD displays: "pH: pH Ok." This was tested in the same trials with the known pH constants and after some debugging it worked the way intended. 
 ### Motor Control
-
+This component required the most tweaking. Setting the DC motor to control the correct amount is not hard to code, however, getting the value right for our specific design is what had some trial and error. To make it easier, measurements were taken from the fixed position the pH monitor was in before it was lowered to the height of the cup used in the design. Some of the issue partially was due to the volume of fluid in each cup. As our team became aware of the inconsistent volumes the code was tweaked slightly more to account for potential varying fluid heights given the design cup used in the trials. 
 ### Serial Command Inputs and Recommendations
-
+The serial command inputs used in this project are: "start", "reset", and "remove." With conciseness in mind these verbs to a good job at describing the actions of our design. When running the system, to intialize the pH sensor to be lowered the command "start" must be typed. Upon hitting enter the pH sensor is lowered into the sample below. There the sensor waits for a few seconds and then gives a reading. Based off that reading, a recommendation is given to the user. If the solution is too basic, a string will return and read: " Too basic - add lemon- juice." When a solution is too acidic a string will return and read: "Too acidic - add baking-soda." However, when the solution is in the optimal range of 6.6-7.5 pH, the string that returns reads: "Perfect - no action." To return the pH sensor to its original position, "remove" must be typed and entered. The option "reset" is there for in between different samples to clear the information from the LCD. 
 # Design Decision Discussion
-***Include information on why we made the decisions we did for users
+The reason this team chose the selected design is that we wanted it to be effective yet simple. Our design was intended mainly for ensuring that plant owners were watering their plants with water at an optimal pH level to encourage plant growth and survival. Therefore, the design didn't need to be too large or complex. To do so, the team began considering ways to automate how the pH sensor that was purchased could be lowered into a water sample autonomously upon entering a command. It was decided that this design shouldn't be overly complicated as the task at hand was simple which was to have a pH sensor be lowered into a water sample, take a reading, tell the user how to adjust the reading if need be, and then raise out of the water when finished. What the team decided on was to have the pH sensor attached to a string wrapped around a wheel controlled by a DC motor. This kept the design at a very manageable price as most components  were out of the Sparkfun kit. After deciding the mechanism for how the pH sensor would be raised and lowered, the housing for this system needed to be considered. What the team came up with was gluing two pieces of wood together with one piece acting as a base for water samples to sit on and the other piece to be the anchor point for the DC motor and wheel. Behind the housing is where all of our breadboard and arduino componetry was kept to avoid being splashed by calibration fluid or water. 
 
 ## Testing Results – *What happened in the lab?*
 
