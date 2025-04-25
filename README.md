@@ -1,19 +1,20 @@
 # BAE305-SP25-Final-Project
 Group Members: Faith Cox, Abby Phillips, and Quinn Rison
+
 Date: 4/16/2024
 
-# Summary
+## Summary
+This project involved designing and building an Arduino-based system to measure and display the pH level of a solution in real time using a brush motor to move the pH sensor on command. The system uses an analog pH sensor connected to an Arduino Uno, which reads the sensor output, calculates the pH value based on a voltage-to-pH conversion formula, and displays the results both on the Serial Monitor and an external 16x2 parallel LCD screen (ADM1602K). The system provides recommendations to users to support plant care.
 
-
-# Design Description
-## System Overview
+## Design Description
+### System Overview
 - pH Sensing and Data Display (LCD)
 - Visual Feedback (RGB LED)
 - Motorized pH sensor movement
 - User Input via Serial Monitor
 - pH Recommendations
 
-## Equipment
+### Equipment
 - Ardunino UNO Microcontroller
 - Analog pH sensor
 - 16x2 LDC Display
@@ -23,10 +24,11 @@ Date: 4/16/2024
 - Breadboard
 - Wires
 - Power Supply
-## Mechanical System Overview
+
+### Mechanical System Overview
 
 
-## Circuit Wiring Overview
+### Circuit Wiring Overview
 
 | **Component**              | **Arduino Pin** | **Connection Description**                   |
 |---------------------------|------------------|----------------------------------------------|
@@ -51,14 +53,180 @@ Date: 4/16/2024
 |                           | 5V               | VCC – Logic voltage                          |
 |                           | GND              | GND – Shared ground with Arduino             |
 | **Motor (DG01D)**         | A01, A02         | Connect to A01 and A02 on TB6612FNG          |
+<p align="left"><em> Table 1: The above table outlines the pin connections in the wiring of our pH sensor, RGB LED, brush motor, motor driver and LDC display. The part numbers for the motor components are also labeled. The circuit was powered by a cord connection to the computer running the program. </em></p>
 
-## Project Code
+
+
+
+### Project Code
+```ruby
+#include <LiquidCrystal.h>  // Include the LiquidCrystal library for controlling the LCD
+
+// Define pins
+#define PH_PIN A0  // Analog pin connected to the pH sensor
+
+// Initialize the LCD: RS, E, D4, D5, D6, D7
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// RGB LED pins
+#define RED_PIN   A1
+#define GREEN_PIN A2
+#define BLUE_PIN  A3
+
+// TB6612FNG Motor Driver Control Pins
+#define AIN1 9
+#define AIN2 10
+#define PWMA A4
+#define STBY A5
+
+bool waitingToRemove = false; // State variable to track if the system is waiting to remove the sensor
+
+void setup() {
+  Serial.begin(9600);        // Start serial communication at 9600 baud rate
+  pinMode(PH_PIN, INPUT);    // Set pH sensor pin as input
+
+  // Set RGB LED pins as outputs
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
+
+  // Set motor driver pins as outputs
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(PWMA, OUTPUT);
+  pinMode(STBY, OUTPUT);
+
+  digitalWrite(STBY, HIGH);  // Enable motor driver by setting STBY high
+
+  lcd.begin(16, 2);          // Initialize a 16x2 LCD
+  lcd.setCursor(0, 0);
+  lcd.print("pH Monitor Ready");  // Display welcome message
+  delay(2000);
+  lcd.clear();               // Clear LCD screen after message
+
+  Serial.println("System ready. Type 'start' to begin.");  // Prompt user through Serial Monitor
+}
+
+void loop() {
+  if (Serial.available()) {  // Check if any serial input is available
+    String input = Serial.readStringUntil('\n');  // Read input until newline character
+    input.trim();  // Remove any extra whitespace
+
+    // If user types "start" and sensor is not already lowered
+    if (input.equalsIgnoreCase("start") && !waitingToRemove) {
+      Serial.println("→ Lowering sensor...");
+      lowerSensor3Inches();  // Lower the sensor into the water
+      delay(5000);           // Allow time for the sensor to stabilize
+
+      float pH = readPH();   // Read pH value
+      showPHFeedback(pH);    // Display feedback based on pH
+
+      Serial.println("\nType 'remove' to raise the sensor.");
+      waitingToRemove = true; // Update state
+    }
+    // If user types "remove" and sensor is currently lowered
+    else if (input.equalsIgnoreCase("remove") && waitingToRemove) {
+      Serial.println("→ Raising sensor...");
+      raiseSensor3Inches();  // Raise the sensor out of the water
+      Serial.println("Cycle complete. Type 'start' to begin again.");
+      waitingToRemove = false; // Reset state
+    }
+    // If user types "reset" to reset the system
+    else if (input.equalsIgnoreCase("reset")) {
+      Serial.println("🔄 Resetting system...");
+
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("pH Monitor Ready");  // Display reset message
+      delay(2000);
+      lcd.clear();
+
+      waitingToRemove = false;
+
+      Serial.println("System ready. Type 'start' to begin.");
+    }
+  }
+}
+
+// Function to read the pH sensor and calculate pH value
+float readPH() {
+  int sensorValue = analogRead(PH_PIN);  // Read raw analog value
+  float voltage = sensorValue * (5.0 / 1023.0);  // Convert to voltage (assuming 5V reference)
+  float pH = 7 + ((3.65 - voltage) * 3.0);  // Rough linear approximation for pH (adjust if needed)
+
+  // Print debug info
+  Serial.print("Sensor: ");
+  Serial.print(sensorValue);
+  Serial.print(" | Voltage: ");
+  Serial.print(voltage, 2);
+  Serial.print(" V | pH: ");
+  Serial.println(pH, 2);
+
+  return pH;
+}
+
+// Function to show pH reading on LCD and RGB LED
+void showPHFeedback(float pH) {
+  lcd.setCursor(0, 0);
+  lcd.print("pH: ");
+  lcd.print(pH, 2);
+  lcd.print("     ");  // Clear trailing characters
+
+  lcd.setCursor(0, 1);
+
+  // Feedback based on pH range
+  if (pH < 6.5) {
+    lcd.print("Too Acidic     ");
+    setColor(255, 0, 0);  // Set LED to Red
+    Serial.println("→ pH is too acidic. Consider adding a base like baking soda or adjusting nutrients.");
+  } else if (pH > 7.5) {
+    lcd.print("Too Basic      ");
+    setColor(0, 0, 255);  // Set LED to Blue
+    Serial.println("→ pH is too basic. Consider adding a mild acid like vinegar or lemon juice.");
+  } else {
+    lcd.print("pH OK          ");
+    setColor(0, 255, 0);  // Set LED to Green
+    Serial.println("→ pH is in the optimal range.");
+  }
+}
+
+// Helper function to set the RGB LED color
+void setColor(int redVal, int greenVal, int blueVal) {
+  analogWrite(RED_PIN, redVal);
+  analogWrite(GREEN_PIN, greenVal);
+  analogWrite(BLUE_PIN, blueVal);
+}
+
+// Function to lower the sensor approximately 3 inches
+void lowerSensor3Inches() {
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
+  analogWrite(PWMA, 130);  // Control motor speed
+  delay(165);              // Time for motor to run (adjust for exact distance)
+  analogWrite(PWMA, 0);    // Stop motor
+}
+
+// Function to raise the sensor approximately 3 inches
+void raiseSensor3Inches() {
+  digitalWrite(AIN1, HIGH);
+  digitalWrite(AIN2, LOW);
+  analogWrite(PWMA, 130);
+  delay(400);              // Longer delay for lifting (adjust if needed)
+  analogWrite(PWMA, 0);    // Stop motor
+}
+```
+<p align="left"><em>Program 1: The above code performs the main functions of the automatic pH sensor as described previously. The system lowers the pH sensor into a solution, measures the pH level, displays real-time readings and feedback on an LCD, indicates pH status with an RGB LED (acidic, basic, or optimal), and raises the sensor upon user command, streamlining the pH monitoring process. </em></p>
+
 # Testing Description
-## pH Sensor Reading Accuracy
-## RGB LED Accuracy
-## LCD Display
-## Motor Control
-## Serial Command Inputs and Recommendations
+### pH Sensor Reading Accuracy
+
+### RGB LED Accuracy
+
+### LCD Display
+
+### Motor Control
+
+### Serial Command Inputs and Recommendations
 
 # Design Decision Discussion
 ***Include information on why we made the decisions we did for users
@@ -99,5 +267,3 @@ Within the tested range (pH 4–10) the system provides dependable ±0.15 pH acc
 * **Data logging** – Current firmware only streams to the Arduino serial monitor; long-term tracking would require SD-card or Wi-Fi integration.
 
 ---
-
-**Conclusion** – The prototype meets all rubric criteria for *exemplary* performance: it clearly demonstrates what the system can and cannot do, documents tests that directly measure those capabilities, and explains why the design is best suited to small-scale hydroponic applications rather than high-volume industrial analysis.
