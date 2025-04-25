@@ -29,6 +29,78 @@ This project involved designing and building an Arduino-based system to measure 
 
 
 ### Circuit Wiring Overview
+Step 1:
+Place the Arduino Uno and a breadboard on your workspace.
+
+Step 2:
+Connect the pH sensor to the Arduino:
+
+Connect the VCC pin of the pH sensor to the Arduino 5V pin.
+
+Connect the GND pin of the pH sensor to the Arduino GND.
+
+Connect the AO (analog output) pin of the pH sensor to analog pin A0 on the Arduino.
+
+Step 3:
+Wire the 16x2 LCD display to the Arduino:
+
+Connect VSS on the LCD to Arduino GND.
+
+Connect VDD on the LCD to Arduino 5V.
+
+Connect VO (contrast control) to the center pin of a 10kΩ potentiometer. Connect the outer pins of the potentiometer to 5V and GND.
+
+Connect RS (Register Select) to Arduino digital pin D12.
+
+Connect E (Enable) to Arduino digital pin D11.
+
+Connect D4, D5, D6, and D7 of the LCD to Arduino digital pins D5, D4, D3, and D2, respectively.
+
+Connect pin A (backlight anode) to 5V.
+
+Connect pin K (backlight cathode) to GND.
+
+Step 4:
+Connect the RGB LED:
+
+Insert the RGB LED into the breadboard.
+
+Connect the longest pin (common cathode) to GND.
+
+Connect the Red pin (through a 220Ω resistor) to Arduino digital pin D6.
+
+Connect the Green pin (through a 220Ω resistor) to Arduino digital pin D7.
+
+Connect the Blue pin (through a 220Ω resistor) to Arduino digital pin D8.
+
+Step 5:
+Connect the motor driver and DC motor:
+
+Connect the two terminals of the DC motor to the Motor A outputs on the motor driver.
+
+Connect the motor driver’s IN1 input to Arduino digital pin D9.
+
+Connect the motor driver’s IN2 input to Arduino digital pin D10.
+
+Connect ENA (Enable A) on the motor driver to 5V (for full speed) or connect it to a PWM pin if speed control is needed.
+
+Connect the VCC input of the motor driver to an external motor power supply (e.g., 9V battery).
+
+Connect the GND of the motor driver to both the Arduino GND and the external power supply ground.
+
+Step 6:
+Double-check all connections to ensure:
+
+All GND lines are properly connected together (Arduino, pH sensor, LCD, RGB LED, motor driver).
+
+220Ω resistors are correctly installed for each color pin of the RGB LED.
+
+The potentiometer is installed for proper LCD contrast adjustment.
+
+Step 7:
+Power the Arduino and motor circuit.
+Open the Arduino Serial Monitor at 9600 baud.
+The system should prompt the user, lower the sensor into the solution, measure pH, provide color-coded feedback, display the pH value on the LCD, and then lift the sensor after reading.
 
 | **Component**              | **Arduino Pin** | **Connection Description**                   |
 |---------------------------|------------------|----------------------------------------------|
@@ -55,7 +127,8 @@ This project involved designing and building an Arduino-based system to measure 
 | **Motor (DG01D)**         | A01, A02         | Connect to A01 and A02 on TB6612FNG          |
 <p align="left"><em> Table 1: The above table outlines the pin connections in the wiring of our pH sensor, RGB LED, brush motor, motor driver and LDC display. The part numbers for the motor components are also labeled. The circuit was powered by a cord connection to the computer running the program. </em></p>
 
-
+![66D3BD4E-4BC4-4D9A-92AD-C30685B56EF3](https://github.com/user-attachments/assets/d94efe1f-25d3-4ec7-b1ed-4183d47506eb)
+<p align="left"><em> Image 1: The above image shows the wiring of all circuit components. The full pH sensor is not pictured but all important circuits are. </em></p>
 
 
 ### Project Code
@@ -228,6 +301,7 @@ The LCD Display is great as it tells the user what the sensor is reading in a st
 This component required the most tweaking. Setting the DC motor to control the correct amount is not hard to code, however, getting the value right for our specific design is what had some trial and error. To make it easier, measurements were taken from the fixed position the pH monitor was in before it was lowered to the height of the cup used in the design. Some of the issue partially was due to the volume of fluid in each cup. As our team became aware of the inconsistent volumes the code was tweaked slightly more to account for potential varying fluid heights given the design cup used in the trials. 
 ### Serial Command Inputs and Recommendations
 The serial command inputs used in this project are: "start", "reset", and "remove." With conciseness in mind these verbs to a good job at describing the actions of our design. When running the system, to intialize the pH sensor to be lowered the command "start" must be typed. Upon hitting enter the pH sensor is lowered into the sample below. There the sensor waits for a few seconds and then gives a reading. Based off that reading, a recommendation is given to the user. If the solution is too basic, a string will return and read: " Too basic - add lemon- juice." When a solution is too acidic a string will return and read: "Too acidic - add baking-soda." However, when the solution is in the optimal range of 6.6-7.5 pH, the string that returns reads: "Perfect - no action." To return the pH sensor to its original position, "remove" must be typed and entered. The option "reset" is there for in between different samples to clear the information from the LCD. 
+
 # Design Decision Discussion
 The reason this team chose the selected design is that we wanted it to be effective yet simple. Our design was intended mainly for ensuring that plant owners were watering their plants with water at an optimal pH level to encourage plant growth and survival. Therefore, the design didn't need to be too large or complex. To do so, the team began considering ways to automate how the pH sensor that was purchased could be lowered into a water sample autonomously upon entering a command. The task at hand was simple which was to have a pH sensor be lowered into a water sample, take a reading, display a reading and LED with respect of the reading, tell the user how to adjust the reading if need be, and then raise out of the water when finished. It was decided to have the pH sensor wire it was connected by wrapped around a wheel controlled by a DC motor. This kept the design at a very manageable price as most components  were out of the Sparkfun kit. After deciding the mechanism for how the pH sensor would be raised and lowered, the housing for this system needed to be considered. What the team came up with was gluing two pieces of wood together, each being roughly 1' x 1.5', with one piece acting as a base for water samples to sit on and the other piece to be the anchor point for the DC motor and wheel. Behind the housing is where all of our breadboard and arduino componetry was kept to avoid being splashed by calibration fluid or water. 
 
