@@ -307,11 +307,12 @@ The reason this team chose the selected design is that we wanted it to be effect
 
 ## Testing Results – *What happened in the lab?*
 
-| Buffer Solution | Nominal pH | Mean Measured pH *(n = 3)* | Absolute Error | LED Color Triggered | Recommendation String Printed |
-|-----------------|-----------:|---------------------------:|---------------:|---------------------|--------------------------------|
-| Acidic control  | 4.01       | 4.10 ± 0.04               | 0.09           | **Red**             | “Too acidic – add baking-soda” |
-| Neutral control | 7.00       | 6.93 ± 0.05               | 0.07           | **Green**           | “Perfect – no action”          |
-| Basic control   | 10.01      | 9.88 ± 0.06               | 0.13           | **Blue**            | “Too basic – add lemon-juice”  |
+| Buffer Solution | Nominal pH | Mean Measured pH *(n = 3)* | LED Color Triggered | Recommendation String Printed |
+|-----------------|-----------:|---------------------------:|---------------------|--------------------------------|
+| Acidic control  | 4.01       | 4.10 ± 0.04               | **Red**             | “Too acidic – add baking-soda” |
+| Neutral control | 7.00       | 6.93 ± 0.05               | **Green**           | “Perfect – no action”          |
+| Basic control   | 10.01      | 9.88 ± 0.06               | **Blue**            | “Too basic – add lemon-juice”  |
+
 
 * **Accuracy** – Across the full horticultural range (pH 4–10) the probe stayed within ±0.15 pH units of the certified buffers, meeting the manufacturer’s ±0.2 pH claim.  
 * **Repeatability** – Ten consecutive cycles on each buffer produced a pooled standard deviation of 0.06 pH units, indicating stable readings during a single session.  
