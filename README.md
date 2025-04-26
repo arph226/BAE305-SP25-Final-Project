@@ -25,8 +25,6 @@ This project involved designing and building an Arduino-based system to measure 
 - Wires
 - Power Supply
 
-
-
 ![IMG_0346](https://github.com/user-attachments/assets/612227e7-ba62-4fae-b308-07091ab8e97b)
 <p align="left"><em> Figure 1: Engineering design drawing of all automatic pH monitoring system components. The wiring for the arduino in this drawing is simplified but an image of it will be below as well. </em></p>
 
@@ -38,78 +36,42 @@ This project involved designing and building an Arduino-based system to measure 
 
 
 ### Circuit Wiring Overview
-Step 1:
-Place the Arduino Uno and a breadboard on your workspace.
-
-Step 2:
 Connect the pH sensor to the Arduino:
+1. Connect the VCC pin of the pH sensor to the Arduino 5V pin.
+2. Connect the GND pin of the pH sensor to the Arduino GND.
+3. Connect the AO (analog output) pin of the pH sensor to analog pin A0 on the Arduino.
 
-Connect the VCC pin of the pH sensor to the Arduino 5V pin.
-
-Connect the GND pin of the pH sensor to the Arduino GND.
-
-Connect the AO (analog output) pin of the pH sensor to analog pin A0 on the Arduino.
-
-Step 3:
 Wire the 16x2 LCD display to the Arduino:
+1. Connect VSS on the LCD to Arduino GND.
+2. Connect VDD on the LCD to Arduino 5V.
+3. Connect VO (contrast control) to the center pin of a 10kΩ potentiometer. Connect the outer pins of the potentiometer to 5V and GND.
+4. Connect RS (Register Select) to Arduino digital pin D12.
+5. Connect E (Enable) to Arduino digital pin D11.
+6. Connect D4, D5, D6, and D7 of the LCD to Arduino digital pins D5, D4, D3, and D2, respectively.
+7. Connect pin A (backlight anode) to 5V.
+8. Connect pin K (backlight cathode) to GND.
 
-Connect VSS on the LCD to Arduino GND.
-
-Connect VDD on the LCD to Arduino 5V.
-
-Connect VO (contrast control) to the center pin of a 10kΩ potentiometer. Connect the outer pins of the potentiometer to 5V and GND.
-
-Connect RS (Register Select) to Arduino digital pin D12.
-
-Connect E (Enable) to Arduino digital pin D11.
-
-Connect D4, D5, D6, and D7 of the LCD to Arduino digital pins D5, D4, D3, and D2, respectively.
-
-Connect pin A (backlight anode) to 5V.
-
-Connect pin K (backlight cathode) to GND.
-
-Step 4:
 Connect the RGB LED:
+1. Insert the RGB LED into the breadboard.
+2. Connect the longest pin (common cathode) to GND.
+3. Connect the Red pin (through a 220Ω resistor) to Arduino digital pin D6.
+4. Connect the Green pin (through a 220Ω resistor) to Arduino digital pin D7.
+5. Connect the Blue pin (through a 220Ω resistor) to Arduino digital pin D8.
 
-Insert the RGB LED into the breadboard.
-
-Connect the longest pin (common cathode) to GND.
-
-Connect the Red pin (through a 220Ω resistor) to Arduino digital pin D6.
-
-Connect the Green pin (through a 220Ω resistor) to Arduino digital pin D7.
-
-Connect the Blue pin (through a 220Ω resistor) to Arduino digital pin D8.
-
-Step 5:
 Connect the motor driver and DC motor:
+1. Connect the two terminals of the DC motor to the Motor A outputs on the motor driver.
+2. Connect the motor driver’s IN1 input to Arduino digital pin D9.
+3. Connect the motor driver’s IN2 input to Arduino digital pin D10.
+4. Connect ENA (Enable A) on the motor driver to 5V (for full speed) or connect it to a PWM pin if speed control is needed.
+5. Connect the VCC input of the motor driver to an external motor power supply (e.g., 9V battery).
+6. Connect the GND of the motor driver to both the Arduino GND and the external power supply ground.
 
-Connect the two terminals of the DC motor to the Motor A outputs on the motor driver.
-
-Connect the motor driver’s IN1 input to Arduino digital pin D9.
-
-Connect the motor driver’s IN2 input to Arduino digital pin D10.
-
-Connect ENA (Enable A) on the motor driver to 5V (for full speed) or connect it to a PWM pin if speed control is needed.
-
-Connect the VCC input of the motor driver to an external motor power supply (e.g., 9V battery).
-
-Connect the GND of the motor driver to both the Arduino GND and the external power supply ground.
-
-Step 6:
 Double-check all connections to ensure:
+1. All GND lines are properly connected together (Arduino, pH sensor, LCD, RGB LED, motor driver).
+2. 220Ω resistors are correctly installed for each color pin of the RGB LED.
+3. The potentiometer is installed for proper LCD contrast adjustment.
 
-All GND lines are properly connected together (Arduino, pH sensor, LCD, RGB LED, motor driver).
 
-220Ω resistors are correctly installed for each color pin of the RGB LED.
-
-The potentiometer is installed for proper LCD contrast adjustment.
-
-Step 7:
-Power the Arduino and motor circuit.
-Open the Arduino Serial Monitor at 9600 baud.
-The system should prompt the user, lower the sensor into the solution, measure pH, provide color-coded feedback, display the pH value on the LCD, and then lift the sensor after reading.
 
 | **Component**              | **Arduino Pin** | **Connection Description**                   |
 |---------------------------|------------------|----------------------------------------------|
@@ -139,7 +101,9 @@ The system should prompt the user, lower the sensor into the solution, measure p
 ![66D3BD4E-4BC4-4D9A-92AD-C30685B56EF3](https://github.com/user-attachments/assets/2124d801-dfdd-4e7d-9f78-57745411224d)
 <p align="left"><em> Figure 3: Final circuit components that power pH sensor, LCD display, motor, and RGB LED. </em></p>
 
-
+Power the Arduino and motor circuit:
+1. Open the Arduino Serial Monitor at 9600 baud.
+2. The system should prompt the user, lower the sensor into the solution, measure pH, provide color-coded feedback, display the pH value on the LCD, and then lift the sensor after reading.
 
 
 ### Project Code
