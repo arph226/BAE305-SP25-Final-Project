@@ -287,6 +287,7 @@ The reason this team chose the selected design is that we wanted it to be effect
 | Acidic control  | 4.01       | 4.10 ± 0.04               | **Red**             | “Too acidic – add baking-soda” |
 | Neutral control | 7.00       | 6.93 ± 0.05               | **Green**           | “Perfect – no action”          |
 | Basic control   | 10.01      | 9.88 ± 0.06               | **Blue**            | “Too basic – add lemon-juice”  |
+<p align="left"><em> Table 2: The table summarizes the system's performance in measuring known buffer solutions, showing the average measured pH across three trials, the RGB LED color triggered based on the pH value, and the recommendation printed for the user based on the acidity or basicity of the solution. </em></p>
 
 
 * **Accuracy** – Across the full horticultural range (pH 4–10) the probe stayed within ±0.15 pH units of the certified buffers, meeting the manufacturer’s ±0.2 pH claim.  
