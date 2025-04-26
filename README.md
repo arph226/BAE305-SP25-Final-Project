@@ -1,7 +1,7 @@
 # BAE305-SP25-Final-Project
 Group Members: Faith Cox, Abby Phillips, and Quinn Rison
 
-Date: 4/16/2024
+Date: 4/25/2025
 
 ## Summary
 This project involved designing and building an Arduino-based system to measure and display the pH level of a solution in real time using a brush motor to move the pH sensor on command. The system uses an analog pH sensor connected to an Arduino Uno, which reads the sensor output, calculates the pH value based on a voltage-to-pH conversion formula, and displays the results both on the Serial Monitor and an external 16x2 parallel LCD screen (ADM1602K). The system provides recommendations to users to support plant care.
