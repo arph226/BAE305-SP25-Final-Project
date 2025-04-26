@@ -26,7 +26,7 @@ This project involved designing and building an Arduino-based system to measure 
 - Power Supply
 
 ### Mechanical System Overview
-
+The image below is a basic schematic of how our system is designed to work. The wiring for the arduino in this drawing is simplified but an image of it will be below as well. 
 
 ### Circuit Wiring Overview
 Step 1:
