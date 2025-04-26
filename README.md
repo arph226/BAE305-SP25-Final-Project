@@ -25,8 +25,17 @@ This project involved designing and building an Arduino-based system to measure 
 - Wires
 - Power Supply
 
+
+
+![IMG_0346](https://github.com/user-attachments/assets/612227e7-ba62-4fae-b308-07091ab8e97b)
+<p align="left"><em> Figure 1: Engineering design drawing of all automatic pH monitoring system components. The wiring for the arduino in this drawing is simplified but an image of it will be below as well. </em></p>
+
+
 ### Mechanical System Overview
-The image below is a basic schematic of how our system is designed to work. The wiring for the arduino in this drawing is simplified but an image of it will be below as well. 
+![IMG_8354](https://github.com/user-attachments/assets/159583f6-a403-4aed-94bb-1fb62bf639a9)
+<p align="left"><em> Figure 2: Final design including mechanical base, motor, and pH sensor. </em></p>
+
+
 
 ### Circuit Wiring Overview
 Step 1:
@@ -127,8 +136,10 @@ The system should prompt the user, lower the sensor into the solution, measure p
 | **Motor (DG01D)**         | A01, A02         | Connect to A01 and A02 on TB6612FNG          |
 <p align="left"><em> Table 1: The above table outlines the pin connections in the wiring of our pH sensor, RGB LED, brush motor, motor driver and LDC display. The part numbers for the motor components are also labeled. The circuit was powered by a cord connection to the computer running the program. </em></p>
 
-![66D3BD4E-4BC4-4D9A-92AD-C30685B56EF3](https://github.com/user-attachments/assets/d94efe1f-25d3-4ec7-b1ed-4183d47506eb)
-<p align="left"><em> Image 1: The above image shows the wiring of all circuit components. The full pH sensor is not pictured but all important circuits are. </em></p>
+![66D3BD4E-4BC4-4D9A-92AD-C30685B56EF3](https://github.com/user-attachments/assets/2124d801-dfdd-4e7d-9f78-57745411224d)
+<p align="left"><em> Figure 3: Final circuit components that power pH sensor, LCD display, motor, and RGB LED. </em></p>
+
+
 
 
 ### Project Code
