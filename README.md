@@ -31,7 +31,7 @@ This project involved designing and building an Arduino-based system to measure 
 
 ### Mechanical System Overview
 ![IMG_8354](https://github.com/user-attachments/assets/159583f6-a403-4aed-94bb-1fb62bf639a9)
-<p align="left"><em> Figure 2: Final design including mechanical base, motor, and pH sensor. </em></p>
+<p align="left"><em> Figure 2: Final design including mechanical base, motor, and pH sensor. The base is made with two 1 inch thick pieces of wood glued together at the base to create an L shape. The motor is mounted to the top of the base using velcro adheasive strips, so it can be replaced with ease. The pH sensor is attached via the communication wire with enough excess that it hangs 2 inches below the motor. We also adjusted the code by changing the delay time of the motor to change the height movement.</em></p>
 
 
 
@@ -101,12 +101,12 @@ Double-check all connections to ensure:
 ![66D3BD4E-4BC4-4D9A-92AD-C30685B56EF3](https://github.com/user-attachments/assets/2124d801-dfdd-4e7d-9f78-57745411224d)
 <p align="left"><em> Figure 3: Final circuit components that power pH sensor, LCD display, motor, and RGB LED. </em></p>
 
+
+### Project Code
 Power the Arduino and motor circuit:
 1. Open the Arduino Serial Monitor at 9600 baud.
 2. The system should prompt the user, lower the sensor into the solution, measure pH, provide color-coded feedback, display the pH value on the LCD, and then lift the sensor after reading.
 
-
-### Project Code
 ```ruby
 #include <LiquidCrystal.h>  // Include the LiquidCrystal library for controlling the LCD
 
